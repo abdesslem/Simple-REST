@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+gunicorn = "*"
+
+[dev-packages]
+flask-sqlalchemy = "*"
+flask-marshmallow = "*"
+chardet = "*"
+connexion = {extras = ["swagger-ui", "uvicorn", "flask"], version = "*"}
+httpx = "*"
+furl = "*"
+pytest = "*"
+
+[requires]
+python_version = "3.11"

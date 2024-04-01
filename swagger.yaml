@@ -1,0 +1,108 @@
+swagger: "2.0"
+info:
+  title: Movies API
+  version: "0.1"
+  description: A simple REST API
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /movies:
+    post:
+      tags: [Movies]
+      operationId : views.movies.create_movie
+      summary: Create a movie
+      parameters:
+        - name: payload
+          in: body
+          schema:
+            $ref: '#/definitions/MoviePayload'
+      responses:
+        201:
+          description: Movie created
+          schema:
+            $ref: '#/definitions/MoviePayload'
+        502:
+          description: Bad gatway
+        500:
+          description: Internal error
+    get:
+      tags: [Movies]
+      operationId: views.movies.get_movies
+      summary: Get list of Movies
+      parameters:
+        - name: title
+          in: query
+          type: string
+          required: false
+        - name: start
+          in: query
+          type: integer
+          required: false
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          default: 10
+      responses:
+        200:
+          description: Return list of Movies
+          schema:
+            $ref: '#/definitions/MoviePayload'
+        500:
+          description: Internal error
+  /movies/{id}:
+    get:
+      tags: [Movies]
+      operationId: views.movies.get_movie
+      summary: Get a single Movie by id
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: Return Movie
+          schema:
+            $ref: '#/definitions/MoviePayload'
+        404:
+          description: Movie does not exist
+    delete:
+      tags: [Movies]
+      operationId: views.movies.delete_movie
+      summary: Remove a Movie by ID
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        204:
+          description: Movie was deleted
+        404:
+          description: Movie does not exist
+      security:
+        - api_key: []
+securityDefinitions:
+   api_key:
+     type: apiKey
+     name: X-Auth
+     in: header
+     x-apikeyInfoFunc: auth.apikey.check
+
+
+parameters:
+  id:
+    name: id
+    description: Movie's Unique identifier
+    in: path
+    type: integer
+    required: true
+
+
+definitions:
+  MoviePayload:
+    type: object
+    required:
+      - title
+    properties:
+      title:
+        type: string
+        description: Movie's title
+        example: "Need for speed"
