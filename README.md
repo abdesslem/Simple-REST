@@ -29,7 +29,7 @@ This command will initialiate the DB and insert 100 movies.
 ### Run locally
 
 ```
-pipenv run python scrape_movies.py
+pipenv run python app.py
 ```
 
 or using uvicorn
